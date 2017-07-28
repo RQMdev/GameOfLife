@@ -1,8 +1,9 @@
-var body = document.getElementsByTagName('body')[0];
+var canvas = document.getElementById('canvas');
 var width = 100;
 var height = 100;
 var array = [];
 
+// generate randomly the cells in array and in DOM.
 for (var i = 0; i < width*height; i++){
 	var cell = Math.random() >= 0.5;
 
@@ -16,10 +17,10 @@ for (var i = 0; i < width*height; i++){
 		newCell.classList.add('dead');
 	}
 	newCell.setAttribute('id', i);
-	body.appendChild(newCell);
+	canvas.appendChild(newCell);
 }
 
-
+// Actualize the state of the cells.
 setInterval(function(){
 var length = array.length;
 var newState = [];
@@ -29,7 +30,7 @@ var newState = [];
 		// UP LEFT
 		if (typeof array[i - width - 1] === 'undefined'){
 			// do nothing
-		} else if (array[i - width - 1] == true){
+		} else if (array[i - width - 1] == true  && !(i%width == 0)){
 			neighbourAlive++;
 		}
 
@@ -43,28 +44,28 @@ var newState = [];
 		// UP RIGHT
 		if (typeof array[i - width + 1] === 'undefined'){
 			// do nothing
-		} else if (array[i - width + 1] == true){
+		} else if (array[i - width + 1] == true && !(i%width == 99)){
 			neighbourAlive++;
 		}
 
 		// LEFT
 		if (typeof array[i - 1] === 'undefined'){
 			// do nothing
-		} else if (array[i - 1] == true){
+		} else if (array[i - 1] == true && !(i%width == 0)){
 			neighbourAlive++;
 		}
 
 		// RIGHT
 		if (typeof array[i + 1] === 'undefined'){
 			// do nothing
-		} else if (array[i + 1] == true){
+		} else if (array[i + 1] == true && !(i%width == 99)){
 			neighbourAlive++;
 		}
 
 		// DOWN LEFT
 		if (typeof array[i + width - 1] === 'undefined'){
 			// do nothing
-		} else if (array[i + width - 1] == true){
+		} else if (array[i + width - 1] == true && !(i%width == 0)){
 			neighbourAlive++;
 		}
 
@@ -78,7 +79,7 @@ var newState = [];
 		// DOWN RIGHT
 		if (typeof array[i + width + 1] === 'undefined'){
 			// do nothing
-		} else if (array[i + width + 1] == true){
+		} else if (array[i + width + 1] == true && !(i%width == 99)){
 			neighbourAlive++;
 		}
 
@@ -92,12 +93,6 @@ var newState = [];
 		}else {
 			var cell = false;
 		}
-
-		// if (array[i] == true){
-		// 	var cell = false;
-		// } else {
-		// 	var cell = true;
-		// }
 
 		newState.push(cell);
 
@@ -117,4 +112,4 @@ var newState = [];
 		}
 	}
 
-}, 50);
+}, 500);
