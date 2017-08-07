@@ -6,7 +6,7 @@ html {
 body {
 	margin: 0;
 	padding: 0;
-	background: #685244;
+	background: #222;
 }
 
 #canvas {
@@ -28,10 +28,20 @@ body {
 	height: 100%;
 }
 
-.alive {
-	background: #929965;
-}
+/*.alive {}*/
 
 .dead {
-	background: #01464d;
+	background: #000;
+}
+
+.red {
+	background: red;
+}
+
+.purple {
+	background: purple;
+}
+
+.yellow {
+	background: yellow;
 }
