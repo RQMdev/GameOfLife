@@ -7,19 +7,32 @@ var width = 200;
 var height = 100;
 var array = [];
 
+function randomWithProbability() {
+  var notRandomNumbers = [0, 0, 0, 0, 0, 1, 2, 3];
+  var idx = Math.floor(Math.random() * notRandomNumbers.length);
+  return notRandomNumbers[idx];
+}
 
 // generate randomly the cells in array and in DOM.
 for (var i = 0; i < width*height; i++){
-	var cell = Math.random() >= 0.5;
+	var cell = randomWithProbability();
 
 	array.push(cell);
 
 	var newCell = document.createElement('div');
 	newCell.classList.add('cell');
-	if (cell == true ){
-		newCell.classList.add('alive');
-	} else if ( cell == false ){
+	if (cell === 0 ){
 		newCell.classList.add('dead');
+	} else {
+		newCell.classList.add('alive');
+	}
+
+	if (cell === 1){
+		newCell.classList.add('red');
+	} else if (cell === 2){
+		newCell.classList.add('purple');
+	} else if (cell === 3){
+		newCell.classList.add('yellow');
 	}
 	newCell.setAttribute('id', i);
 	canvas.appendChild(newCell);
@@ -29,7 +42,7 @@ for (var i = 0; i < width*height; i++){
 random.onclick = function(){
 	var newState = [];
 	for (var i = 0; i < width*height; i++){
-		var cell = Math.random() >= 0.5;
+		var cell = randomWithProbability();
 
 		newState.push(cell);
 	}
@@ -37,12 +50,23 @@ random.onclick = function(){
 
 	for (var i = 0; i < length; i++){
 		currentCell = document.getElementById(i);
-		if (array[i] == false){
+		if (array[i] === 0){
 			currentCell.classList.remove('alive');
+			currentCell.classList.remove('red');
+			currentCell.classList.remove('purple');
+			currentCell.classList.remove('yellow');
 			currentCell.classList.add('dead');
 		} else {
 			currentCell.classList.remove('dead');
 			currentCell.classList.add('alive');
+		}
+
+		if (array[i] === 1){
+			currentCell.classList.add('red');
+		} else if (array[i] === 2){
+			currentCell.classList.add('purple');
+		} else if (array[i] === 3){
+			currentCell.classList.add('yellow');
 		}
 	}
 }
@@ -51,7 +75,7 @@ random.onclick = function(){
 clear.onclick = function(){
 	var newState = [];
 	for (var i = 0; i < width*height; i++){
-		var cell = false;
+		var cell = 0;
 
 		newState.push(cell);
 	}
@@ -59,8 +83,11 @@ clear.onclick = function(){
 
 	for (var i = 0; i < length; i++){
 		currentCell = document.getElementById(i);
-		if (array[i] == false){
+		if (array[i] === 0){
 			currentCell.classList.remove('alive');
+			currentCell.classList.remove('red');
+			currentCell.classList.remove('purple');
+			currentCell.classList.remove('yellow');
 			currentCell.classList.add('dead');
 		} else {
 			currentCell.classList.remove('dead');
@@ -76,6 +103,9 @@ start.onclick = function(){
 	var newState = [];
 		for (var i = 0; i < length; i++){
 			var neighbourAlive = 0;
+			var neighbourRed = 0;
+			var neighbourPurple = 0;
+			var neighbourYellow = 0;
 
 			// var neighbourUpLeft = array[i - width - 1] == true && !(i%width == 0);
 			// var neighbourUp = array[i - width] == true;
@@ -97,72 +127,135 @@ start.onclick = function(){
 			// 	}
 			// }
 
-
 			// UP LEFT
 			if (typeof array[i - width - 1] === 'undefined'){
 				// do nothing
-			} else if (array[i - width - 1] == true  && !(i%width == 0)){
+			} else if (array[i - width - 1] > 0  && !(i%width == 0)){
 				neighbourAlive++;
+				if (array[i - width - 1] === 1){
+					neighbourRed++;
+				}	else if (array[i - width - 1] === 2){
+					neighbourPurple++;
+				}	else if (array[i - width - 1] === 3){
+					neighbourYellow++;
+				}
 			}
 
 			// UP
 			if (typeof array[i - width] === 'undefined'){
 				// do nothing
-			} else if (array[i - width] == true){
+			} else if (array[i - width] > 0){
 				neighbourAlive++;
+				if (array[i - width] === 1){
+					neighbourRed++;
+				}	else if (array[i - width] === 2){
+					neighbourPurple++;
+				}	else if (array[i - width] === 3){
+					neighbourYellow++;
+				}
 			}
 
 			// UP RIGHT
 			if (typeof array[i - width + 1] === 'undefined'){
 				// do nothing
-			} else if (array[i - width + 1] == true && !(i%width == (width - 1))){
+			} else if (array[i - width + 1] > 0 && !(i%width == (width - 1))){
 				neighbourAlive++;
+				if (array[i - width + 1] === 1){
+					neighbourRed++;
+				}	else if (array[i - width + 1] === 2){
+					neighbourPurple++;
+				}	else if (array[i - width + 1] === 3){
+					neighbourYellow++;
+				}
 			}
 
 			// LEFT
 			if (typeof array[i - 1] === 'undefined'){
 				// do nothing
-			} else if (array[i - 1] == true && !(i%width == 0)){
+			} else if (array[i - 1]  > 0 && !(i%width == 0)){
 				neighbourAlive++;
+				if (array[i - 1] === 1){
+					neighbourRed++;
+				}	else if (array[i - 1] === 2){
+					neighbourPurple++;
+				}	else if (array[i - 1] === 3){
+					neighbourYellow++;
+				}
 			}
 
 			// RIGHT
 			if (typeof array[i + 1] === 'undefined'){
 				// do nothing
-			} else if (array[i + 1] == true && !(i%width == (width - 1))){
+			} else if (array[i + 1]  > 0 && !(i%width == (width - 1))){
 				neighbourAlive++;
+				if (array[i + 1] === 1){
+					neighbourRed++;
+				}	else if (array[i + 1] === 2){
+					neighbourPurple++;
+				}	else if (array[i + 1] === 3){
+					neighbourYellow++;
+				}
 			}
 
 			// DOWN LEFT
 			if (typeof array[i + width - 1] === 'undefined'){
 				// do nothing
-			} else if (array[i + width - 1] == true && !(i%width == 0)){
+			} else if (array[i + width - 1]  > 0 && !(i%width == 0)){
 				neighbourAlive++;
+				if (array[i + width - 1] === 1){
+					neighbourRed++;
+				}	else if (array[i + width - 1] === 2){
+					neighbourPurple++;
+				}	else if (array[i + width - 1] === 3){
+					neighbourYellow++;
+				}
 			}
 
 			// DOWN
 			if (typeof array[i + width] === 'undefined'){
 				// do nothing
-			} else if (array[i + width] == true){
+			} else if (array[i + width]  > 0){
 				neighbourAlive++;
+				if (array[i + width] === 1){
+					neighbourRed++;
+				}	else if (array[i + width] === 2){
+					neighbourPurple++;
+				}	else if (array[i + width] === 3){
+					neighbourYellow++;
+				}
 			}
 
 			// DOWN RIGHT
 			if (typeof array[i + width + 1] === 'undefined'){
 				// do nothing
-			} else if (array[i + width + 1] == true && !(i%width == (width - 1))){
+			} else if (array[i + width + 1]  > 0 && !(i%width == (width - 1))){
 				neighbourAlive++;
+				if (array[i + width + 1] === 1){
+					neighbourRed++;
+				}	else if (array[i + width + 1] === 2){
+					neighbourPurple++;
+				}	else if (array[i + width + 1] === 3){
+					neighbourYellow++;
+				}
 			}
 
 
-			if (array[i] == false && neighbourAlive == 3){
-				var cell = true;
-			} else if (array[i] == true && neighbourAlive == 3){
-				var cell = true;
-			} else if (array[i] == true && neighbourAlive == 2){
-				var cell = true;
+			if (array[i] === 0 && neighbourAlive == 3){
+				if (neighbourRed > 1){
+					var cell = 1;
+				}	else if (neighbourPurple > 1){
+					var cell = 2;
+				}	else if (neighbourYellow > 1){
+					var cell = 3;
+				} else {
+					var cell = Math.floor(Math.random()*3) + 1;
+				}
+			} else if (array[i] > 0 && neighbourAlive == 3){
+				var cell = array[i];
+			} else if (array[i] > 0 && neighbourAlive == 2){
+				var cell = array[i];
 			}else {
-				var cell = false;
+				var cell = 0;
 			}
 
 			newState.push(cell);
@@ -174,12 +267,23 @@ start.onclick = function(){
 
 		for (var i = 0; i < length; i++){
 			currentCell = document.getElementById(i);
-			if (array[i] == false){
+			if (array[i] === 0){
 				currentCell.classList.remove('alive');
+				currentCell.classList.remove('red');
+				currentCell.classList.remove('purple');
+				currentCell.classList.remove('yellow');
 				currentCell.classList.add('dead');
 			} else {
 				currentCell.classList.remove('dead');
 				currentCell.classList.add('alive');
+			}
+
+			if (array[i] === 1){
+				currentCell.classList.add('red');
+			} else if (array[i] === 2){
+				currentCell.classList.add('purple');
+			} else if (array[i] === 3){
+				currentCell.classList.add('yellow');
 			}
 		}
 
@@ -190,22 +294,30 @@ stop.onclick = function(){
 	window.clearInterval(refresh);
 };
 
+// Add cells on Click
 var cells = document.getElementsByClassName('cell');
 for ( var i = 0; i < cells.length; i++){
 
 	cells[i].onclick = function(){
 		current = this;
-		if ( current.classList.contains('alive') ){
-			current.classList.remove('alive');
-			current.classList.add('dead');
-			array[current.id] = false;
-			console.log(current.id);
-
-		} else if ( current.classList.contains('dead') ){
+		if ( array[current.id] === 0 ){
 			current.classList.remove('dead');
 			current.classList.add('alive');
-			array[current.id] = true;
-			console.log(current.id);
+			current.classList.add('red');
+			array[current.id] = 1;
+		} else if ( array[current.id] === 1 ){
+			current.classList.remove('red');
+			current.classList.add('purple');
+			array[current.id] = 2;
+		} else if ( array[current.id] === 2 ){
+			current.classList.remove('purple');
+			current.classList.add('yellow');
+			array[current.id] = 3;
+		} else if ( array[current.id] === 3 ){
+			current.classList.remove('alive');
+			current.classList.remove('yellow');
+			current.classList.add('dead');
+			array[current.id] = 0;
 		}
 	};
 }
