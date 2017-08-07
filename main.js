@@ -10,7 +10,7 @@ var array = [];
 
 // generate randomly the cells in array and in DOM.
 for (var i = 0; i < width*height; i++){
-	var cell = Math.random() >= 1;
+	var cell = Math.random() >= 0.5;
 
 	array.push(cell);
 
@@ -129,7 +129,7 @@ start.onclick = function(){
 			// RIGHT
 			if (typeof array[i + 1] === 'undefined'){
 				// do nothing
-			} else if (array[i + 1] == true && !(i%width == 99)){
+			} else if (array[i + 1] == true && !(i%width == (width - 1))){
 				neighbourAlive++;
 			}
 
@@ -150,7 +150,7 @@ start.onclick = function(){
 			// DOWN RIGHT
 			if (typeof array[i + width + 1] === 'undefined'){
 				// do nothing
-			} else if (array[i + width + 1] == true && !(i%width == 99)){
+			} else if (array[i + width + 1] == true && !(i%width == (width - 1))){
 				neighbourAlive++;
 			}
 
