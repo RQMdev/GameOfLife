@@ -6,14 +6,21 @@ html {
 body {
 	margin: 0;
 	padding: 0;
-
+	background: #685244;
 }
 
 #canvas {
-	width: 100vh;
+	width: 100vw;
 	height: 100vh;
 	display: grid;
-	grid-template-columns: repeat(100, 1fr);
+	grid-template-columns: repeat(200, 1fr);
+	grid-gap: 1px;
+}
+
+#control-panel {
+	position: absolute;
+	top: 3em;
+	right: 3em;
 }
 
 .cell {
@@ -22,9 +29,9 @@ body {
 }
 
 .alive {
-	background: white;
+	background: #929965;
 }
 
 .dead {
-	background: black;
+	background: #01464d;
 }
