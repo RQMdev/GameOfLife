@@ -6,6 +6,7 @@ var clear = document.getElementById('clear');
 var width = 200;
 var height = 100;
 var array = [];
+var isRunning = false;
 
 function randomWithProbability() {
   var notRandomNumbers = [0, 0, 0, 0, 0, 1, 2, 3];
@@ -40,6 +41,7 @@ for (var i = 0; i < width*height; i++){
 
 // RANDOM Button
 random.onclick = function(){
+  var length = array.length;
 	var newState = [];
 	for (var i = 0; i < width*height; i++){
 		var cell = randomWithProbability();
@@ -73,6 +75,7 @@ random.onclick = function(){
 
 // CLEAR Button
 clear.onclick = function(){
+  var length = array.length;
 	var newState = [];
 	for (var i = 0; i < width*height; i++){
 		var cell = 0;
@@ -98,200 +101,205 @@ clear.onclick = function(){
 
 // Actualize the state of the cells.
 start.onclick = function(){
-	refresh = window.setInterval(function(){
-	var length = array.length;
-	var newState = [];
-		for (var i = 0; i < length; i++){
-			var neighbourAlive = 0;
-			var neighbourRed = 0;
-			var neighbourPurple = 0;
-			var neighbourYellow = 0;
 
-			// var neighbourUpLeft = array[i - width - 1] == true && !(i%width == 0);
-			// var neighbourUp = array[i - width] == true;
-			// var neighbourUpRight = array[i - width + 1] == true && !(i%width == 99);
-			// var neighbourLeft = array[i - 1] == true && !(i%width == 0);
-			// var neighbourRight = array[i + 1] == true && !(i%width == 99);
-			// var neighbourDownLeft = array[i + width - 1] == true && !(i%width == 0);
-			// var neighbourDown = array[i + width] == true;
-			// var neighbourDownRight = array[i + width + 1] == true && !(i%width == 99);
-			// var neighbour = [];
-			//
-			// neighbour.push(neighbourUpLeft, neighbourUp, neighbourUpRight, neighbourLeft, neighbourRight, neighbourDownLeft, neighbourDown, neighbourDownRight);
-			//
-			// for (var i = 0; i < 8; i++){
-			// 	if (typeof neighbour[i] === 'undefined'){
-			// 		// do nothing
-			// 	} else if (neighbour[i]){
-			// 		neighbourAlive++;
-			// 	}
-			// }
+  if (isRunning == false) {
+    isRunning = true;
+  	refresh = window.setInterval(function(){
+  	var length = array.length;
+  	var newState = [];
+  		for (var i = 0; i < length; i++){
+  			var neighbourAlive = 0;
+  			var neighbourRed = 0;
+  			var neighbourPurple = 0;
+  			var neighbourYellow = 0;
 
-			// UP LEFT
-			if (typeof array[i - width - 1] === 'undefined'){
-				// do nothing
-			} else if (array[i - width - 1] > 0  && !(i%width == 0)){
-				neighbourAlive++;
-				if (array[i - width - 1] === 1){
-					neighbourRed++;
-				}	else if (array[i - width - 1] === 2){
-					neighbourPurple++;
-				}	else if (array[i - width - 1] === 3){
-					neighbourYellow++;
-				}
-			}
+  			// var neighbourUpLeft = array[i - width - 1] == true && !(i%width == 0);
+  			// var neighbourUp = array[i - width] == true;
+  			// var neighbourUpRight = array[i - width + 1] == true && !(i%width == 99);
+  			// var neighbourLeft = array[i - 1] == true && !(i%width == 0);
+  			// var neighbourRight = array[i + 1] == true && !(i%width == 99);
+  			// var neighbourDownLeft = array[i + width - 1] == true && !(i%width == 0);
+  			// var neighbourDown = array[i + width] == true;
+  			// var neighbourDownRight = array[i + width + 1] == true && !(i%width == 99);
+  			// var neighbour = [];
+  			//
+  			// neighbour.push(neighbourUpLeft, neighbourUp, neighbourUpRight, neighbourLeft, neighbourRight, neighbourDownLeft, neighbourDown, neighbourDownRight);
+  			//
+  			// for (var i = 0; i < 8; i++){
+  			// 	if (typeof neighbour[i] === 'undefined'){
+  			// 		// do nothing
+  			// 	} else if (neighbour[i]){
+  			// 		neighbourAlive++;
+  			// 	}
+  			// }
 
-			// UP
-			if (typeof array[i - width] === 'undefined'){
-				// do nothing
-			} else if (array[i - width] > 0){
-				neighbourAlive++;
-				if (array[i - width] === 1){
-					neighbourRed++;
-				}	else if (array[i - width] === 2){
-					neighbourPurple++;
-				}	else if (array[i - width] === 3){
-					neighbourYellow++;
-				}
-			}
+  			// UP LEFT
+  			if (typeof array[i - width - 1] === 'undefined'){
+  				// do nothing
+  			} else if (array[i - width - 1] > 0  && !(i%width == 0)){
+  				neighbourAlive++;
+  				if (array[i - width - 1] === 1){
+  					neighbourRed++;
+  				}	else if (array[i - width - 1] === 2){
+  					neighbourPurple++;
+  				}	else if (array[i - width - 1] === 3){
+  					neighbourYellow++;
+  				}
+  			}
 
-			// UP RIGHT
-			if (typeof array[i - width + 1] === 'undefined'){
-				// do nothing
-			} else if (array[i - width + 1] > 0 && !(i%width == (width - 1))){
-				neighbourAlive++;
-				if (array[i - width + 1] === 1){
-					neighbourRed++;
-				}	else if (array[i - width + 1] === 2){
-					neighbourPurple++;
-				}	else if (array[i - width + 1] === 3){
-					neighbourYellow++;
-				}
-			}
+  			// UP
+  			if (typeof array[i - width] === 'undefined'){
+  				// do nothing
+  			} else if (array[i - width] > 0){
+  				neighbourAlive++;
+  				if (array[i - width] === 1){
+  					neighbourRed++;
+  				}	else if (array[i - width] === 2){
+  					neighbourPurple++;
+  				}	else if (array[i - width] === 3){
+  					neighbourYellow++;
+  				}
+  			}
 
-			// LEFT
-			if (typeof array[i - 1] === 'undefined'){
-				// do nothing
-			} else if (array[i - 1]  > 0 && !(i%width == 0)){
-				neighbourAlive++;
-				if (array[i - 1] === 1){
-					neighbourRed++;
-				}	else if (array[i - 1] === 2){
-					neighbourPurple++;
-				}	else if (array[i - 1] === 3){
-					neighbourYellow++;
-				}
-			}
+  			// UP RIGHT
+  			if (typeof array[i - width + 1] === 'undefined'){
+  				// do nothing
+  			} else if (array[i - width + 1] > 0 && !(i%width == (width - 1))){
+  				neighbourAlive++;
+  				if (array[i - width + 1] === 1){
+  					neighbourRed++;
+  				}	else if (array[i - width + 1] === 2){
+  					neighbourPurple++;
+  				}	else if (array[i - width + 1] === 3){
+  					neighbourYellow++;
+  				}
+  			}
 
-			// RIGHT
-			if (typeof array[i + 1] === 'undefined'){
-				// do nothing
-			} else if (array[i + 1]  > 0 && !(i%width == (width - 1))){
-				neighbourAlive++;
-				if (array[i + 1] === 1){
-					neighbourRed++;
-				}	else if (array[i + 1] === 2){
-					neighbourPurple++;
-				}	else if (array[i + 1] === 3){
-					neighbourYellow++;
-				}
-			}
+  			// LEFT
+  			if (typeof array[i - 1] === 'undefined'){
+  				// do nothing
+  			} else if (array[i - 1]  > 0 && !(i%width == 0)){
+  				neighbourAlive++;
+  				if (array[i - 1] === 1){
+  					neighbourRed++;
+  				}	else if (array[i - 1] === 2){
+  					neighbourPurple++;
+  				}	else if (array[i - 1] === 3){
+  					neighbourYellow++;
+  				}
+  			}
 
-			// DOWN LEFT
-			if (typeof array[i + width - 1] === 'undefined'){
-				// do nothing
-			} else if (array[i + width - 1]  > 0 && !(i%width == 0)){
-				neighbourAlive++;
-				if (array[i + width - 1] === 1){
-					neighbourRed++;
-				}	else if (array[i + width - 1] === 2){
-					neighbourPurple++;
-				}	else if (array[i + width - 1] === 3){
-					neighbourYellow++;
-				}
-			}
+  			// RIGHT
+  			if (typeof array[i + 1] === 'undefined'){
+  				// do nothing
+  			} else if (array[i + 1]  > 0 && !(i%width == (width - 1))){
+  				neighbourAlive++;
+  				if (array[i + 1] === 1){
+  					neighbourRed++;
+  				}	else if (array[i + 1] === 2){
+  					neighbourPurple++;
+  				}	else if (array[i + 1] === 3){
+  					neighbourYellow++;
+  				}
+  			}
 
-			// DOWN
-			if (typeof array[i + width] === 'undefined'){
-				// do nothing
-			} else if (array[i + width]  > 0){
-				neighbourAlive++;
-				if (array[i + width] === 1){
-					neighbourRed++;
-				}	else if (array[i + width] === 2){
-					neighbourPurple++;
-				}	else if (array[i + width] === 3){
-					neighbourYellow++;
-				}
-			}
+  			// DOWN LEFT
+  			if (typeof array[i + width - 1] === 'undefined'){
+  				// do nothing
+  			} else if (array[i + width - 1]  > 0 && !(i%width == 0)){
+  				neighbourAlive++;
+  				if (array[i + width - 1] === 1){
+  					neighbourRed++;
+  				}	else if (array[i + width - 1] === 2){
+  					neighbourPurple++;
+  				}	else if (array[i + width - 1] === 3){
+  					neighbourYellow++;
+  				}
+  			}
 
-			// DOWN RIGHT
-			if (typeof array[i + width + 1] === 'undefined'){
-				// do nothing
-			} else if (array[i + width + 1]  > 0 && !(i%width == (width - 1))){
-				neighbourAlive++;
-				if (array[i + width + 1] === 1){
-					neighbourRed++;
-				}	else if (array[i + width + 1] === 2){
-					neighbourPurple++;
-				}	else if (array[i + width + 1] === 3){
-					neighbourYellow++;
-				}
-			}
+  			// DOWN
+  			if (typeof array[i + width] === 'undefined'){
+  				// do nothing
+  			} else if (array[i + width]  > 0){
+  				neighbourAlive++;
+  				if (array[i + width] === 1){
+  					neighbourRed++;
+  				}	else if (array[i + width] === 2){
+  					neighbourPurple++;
+  				}	else if (array[i + width] === 3){
+  					neighbourYellow++;
+  				}
+  			}
 
-
-			if (array[i] === 0 && neighbourAlive == 3){
-				if (neighbourRed > 1){
-					var cell = 1;
-				}	else if (neighbourPurple > 1){
-					var cell = 2;
-				}	else if (neighbourYellow > 1){
-					var cell = 3;
-				} else {
-					var cell = Math.floor(Math.random()*3) + 1;
-				}
-			} else if (array[i] > 0 && neighbourAlive == 3){
-				var cell = array[i];
-			} else if (array[i] > 0 && neighbourAlive == 2){
-				var cell = array[i];
-			}else {
-				var cell = 0;
-			}
-
-			newState.push(cell);
-
-		}
-
-		array = newState.slice(0);
+  			// DOWN RIGHT
+  			if (typeof array[i + width + 1] === 'undefined'){
+  				// do nothing
+  			} else if (array[i + width + 1]  > 0 && !(i%width == (width - 1))){
+  				neighbourAlive++;
+  				if (array[i + width + 1] === 1){
+  					neighbourRed++;
+  				}	else if (array[i + width + 1] === 2){
+  					neighbourPurple++;
+  				}	else if (array[i + width + 1] === 3){
+  					neighbourYellow++;
+  				}
+  			}
 
 
-		for (var i = 0; i < length; i++){
-			currentCell = document.getElementById(i);
-			if (array[i] === 0){
-				currentCell.classList.remove('alive');
-				currentCell.classList.remove('red');
-				currentCell.classList.remove('purple');
-				currentCell.classList.remove('yellow');
-				currentCell.classList.add('dead');
-			} else {
-				currentCell.classList.remove('dead');
-				currentCell.classList.add('alive');
-			}
+  			if (array[i] === 0 && neighbourAlive == 3){
+  				if (neighbourRed > 1){
+  					var cell = 1;
+  				}	else if (neighbourPurple > 1){
+  					var cell = 2;
+  				}	else if (neighbourYellow > 1){
+  					var cell = 3;
+  				} else {
+  					var cell = Math.floor(Math.random()*3) + 1;
+  				}
+  			} else if (array[i] > 0 && neighbourAlive == 3){
+  				var cell = array[i];
+  			} else if (array[i] > 0 && neighbourAlive == 2){
+  				var cell = array[i];
+  			}else {
+  				var cell = 0;
+  			}
 
-			if (array[i] === 1){
-				currentCell.classList.add('red');
-			} else if (array[i] === 2){
-				currentCell.classList.add('purple');
-			} else if (array[i] === 3){
-				currentCell.classList.add('yellow');
-			}
-		}
+  			newState.push(cell);
 
-	}, 100);
+  		}
+
+  		array = newState.slice(0);
+
+
+  		for (var i = 0; i < length; i++){
+  			currentCell = document.getElementById(i);
+  			if (array[i] === 0){
+  				currentCell.classList.remove('alive');
+  				currentCell.classList.remove('red');
+  				currentCell.classList.remove('purple');
+  				currentCell.classList.remove('yellow');
+  				currentCell.classList.add('dead');
+  			} else {
+  				currentCell.classList.remove('dead');
+  				currentCell.classList.add('alive');
+  			}
+
+  			if (array[i] === 1){
+  				currentCell.classList.add('red');
+  			} else if (array[i] === 2){
+  				currentCell.classList.add('purple');
+  			} else if (array[i] === 3){
+  				currentCell.classList.add('yellow');
+  			}
+  		}
+
+  	}, 100);
+  }
 };
 
 stop.onclick = function(){
 	window.clearInterval(refresh);
+  isRunning = false;
 };
 
 // Add cells on Click
